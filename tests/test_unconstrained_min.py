@@ -103,7 +103,8 @@ class TestMinimizers(unittest.TestCase):
             plt.ylabel('Function Value')
             plt.title(f'{func_name} - GD Convergence')
             plt.grid(True, alpha=0.3)
-            plt.yscale('log')
+            if np.all(np.array(values_gd) > 0):
+                plt.yscale('log')
         
         # Newton function values  
         if len(history_newton) > 1:
@@ -114,7 +115,8 @@ class TestMinimizers(unittest.TestCase):
             plt.ylabel('Function Value')
             plt.title(f'{func_name} - Newton Convergence')
             plt.grid(True, alpha=0.3)
-            plt.yscale('log')
+            if np.all(np.array(values_newton) > 0):
+                plt.yscale('log')
         
         plt.tight_layout()
         plt.show()

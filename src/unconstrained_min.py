@@ -1,5 +1,4 @@
 import numpy as np
- #qzdqzdqzdqzdqzddqzd
 # This list will keep track of all the points we visit during optimization
 _optimization_history = []
 
@@ -22,6 +21,8 @@ def minimize(f_func, x0, method="gd", obj_tol=1e-12, param_tol=1e-8, max_iter=10
     """
     # Make sure we're working with floating point numbers
     x = np.array(x0, dtype=float)
+    
+    global _optimization_history
     # Start our history with the initial point
     _optimization_history = [x.copy()]
     

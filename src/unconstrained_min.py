@@ -51,6 +51,12 @@ def minimize(f_func, x0, method="gd", obj_tol=1e-12, param_tol=1e-8, max_iter=10
             try:
                 # For Newton, solve H * direction = -grad to get better direction
                 direction = np.linalg.solve(hess, -grad)
+                
+                # Check Newton Decrement
+                newton_decrement_sq = -grad.T @ direction  # This is λ²
+                if newton_decrement_sq/2 < obj_tol:
+                    return x, f, True
+                
             except np.linalg.LinAlgError:
                 # If Hessian is bad, fall back to gradient descent
                 direction = -grad
@@ -109,7 +115,7 @@ def line_search(f_func, x, direction, alpha=1.0, beta=0.5, c=0.01):
     directional_deriv = grad0.T @ direction
     
     # If we're not going downhill, take tiny step
-    if directional_deriv >= 0:
+    if directional_deriv > 0:
         return 1e-8
     
     # Try to find a good step size
